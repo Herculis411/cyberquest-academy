@@ -1,0 +1,12 @@
+.geeksdane-credit {
+  margin-top: 0.4rem;
+  font-size: 0.7rem;
+  opacity: 0.8;
+}
+.geeksdane-credit a {
+  color: var(--md-primary-fg-color);
+  text-decoration: none;
+}
+.geeksdane-credit a:hover {
+  text-decoration: underline;
+}

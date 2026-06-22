@@ -1,40 +1,92 @@
+---
+hide:
+  - navigation
+  - toc
+---
+
 # CyberQuest Academy
 
-**Free, beginner-to-advanced, ethics-first training in Cybersecurity & Ethical-Hacking Programming Automation.**
+### Learn cybersecurity the right way — ethics first, lab-only, beginner to professional.
 
-Learn to think like an attacker so you can defend like a professional — through hands-on Python automation, real terminal output, and lab-only practice you can run safely on your own machine.
+CyberQuest Academy is a free, structured path into modern cybersecurity and security automation. You'll go from absolute fundamentals to running a full, authorised penetration-testing engagement — without ever touching a system you don't own. Every step is grounded in authorisation, ethics, and an isolated lab.
 
-!!! danger "One rule above all others"
-    Everything here is taught for **authorised, lawful** use only. You must begin with **[Module 00 · Ethics, Law & Authorisation](00-ethics-law.md)** — it unlocks everything else. Using these skills against systems you don't own or aren't authorised to test is a criminal offence.
+[Start with Module 00 — Ethics & Law :material-arrow-right:](00-ethics-law.md){ .md-button .md-button--primary }
+[Set up your lab :material-flask:](01-safe-lab.md){ .md-button }
 
 ---
 
-## How the course works
+## Why CyberQuest is different
 
-- **24 modules across five tiers**, each building on the last.
-- Every module has a **hands-on lab** and shows the **expected terminal output**, so you always know what success looks like.
-- Every offensive skill is paired with its **defensive** counterpart.
-- Earn a **badge** per module and rank up: Recruit → Operator → Analyst → Specialist → Lead.
-- Finish with a **capstone** that assembles everything into one documented, authorised engagement.
+<div class="grid cards" markdown>
 
-## The path
+-   :material-scale-balance:{ .lg .middle } __Ethics first, always__
 
-| Tier | What you'll learn |
-|------|-------------------|
-| **Start Here** | Ethics, law, authorisation, responsible disclosure |
-| **Tier 0 · Foundations** | Safe lab, Linux, Git, Python fundamentals |
-| **Tier 1 · Networking & Automation Core** | Networking, sockets, recon/OSINT, scanning, Scapy |
-| **Tier 2 · Offensive Security** | Cryptography, web/OWASP, authentication, exploitation concepts |
-| **Tier 3 · Advanced & Specialisation** | Post-exploitation, wireless, malware analysis, blue-team automation |
-| **Tier 4 · Professional & Capstone** | Reporting, full engagement simulation |
+    ---
 
-## Before you start
+    Module 00 is a hard gate. Before any tool is touched, you learn the law (including the Computer Misuse Act), authorisation, scope, and rules of engagement.
 
-1. Read **[Module 00](00-ethics-law.md)** and pass its checkpoint.
-2. Build your isolated lab in **[Module 01](01-safe-lab.md)**.
-3. Work through the tiers in order — each module links to the next.
+-   :material-shield-lock:{ .lg .middle } __Lab-only, by design__
 
-!!! quote
-    Same skills, different ethics — and the ethics are what make you a professional.
+    ---
 
-[Start with Module 00 · Ethics, Law & Authorisation →](00-ethics-law.md){ .md-button .md-button--primary }
+    Every practical exercise runs against intentionally vulnerable targets in an isolated, host-only lab — never against real or third-party systems.
+
+-   :material-magnify-scan:{ .lg .middle } __Offence paired with defence__
+
+    ---
+
+    Offensive techniques are framed defensively and always paired with detection, so you learn to catch the very activity you practise.
+
+-   :material-certificate:{ .lg .middle } __A professional capstone__
+
+    ---
+
+    You finish by running a complete authorised engagement and producing a professional report — the skill that turns knowledge into a career.
+
+</div>
+
+---
+
+## The learning path
+
+<div class="grid cards" markdown>
+
+-   __Module 00 · Ethics, Law & Authorisation__
+
+    ---
+
+    The mandatory gate. Law, authorisation, scope, and responsible disclosure.
+
+-   __Tier 1 · Foundations__
+
+    ---
+
+    Safe lab setup, Linux, networking, and scripting fundamentals.
+
+-   __Tier 2 · Defensive Security__
+
+    ---
+
+    Logging, monitoring, detection engineering, and blue-team skills.
+
+-   __Tier 3 · Offensive Security__
+
+    ---
+
+    Lab-only offensive techniques, defensively framed and paired with detection.
+
+-   __Tier 4 · Professional & Capstone__
+
+    ---
+
+    Reporting, and a full authorised engagement simulation from scope to report.
+
+</div>
+
+---
+
+## Who it's for
+
+Whether you're taking your first step into security or sharpening real skills the legal way, CyberQuest gives you a complete, safe, and ethical path. Same skills, different ethics — and the ethics, the evidence, and the report are what make you a professional.
+
+[Begin the journey :material-arrow-right:](00-ethics-law.md){ .md-button .md-button--primary }
