@@ -60,6 +60,8 @@ nav:
   - Home: index.md
   - "Start Here":
       - "00 · Ethics, Law & Authorisation": 00-ethics-law.md
+  - "Course 02 · Web Application VAPT":
+      - "Hands-On VAPT Lab ↗": https://herculis411.github.io/cyberquest-academy/02-web-vapt/
   - "Tier 0 · Foundations":
       - "01 · Building Your Safe Lab": 01-safe-lab.md
       - "02 · Linux & Command-Line": 02-linux-cli.md
