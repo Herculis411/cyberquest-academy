@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Course 01 · Penetration Testing Foundations — CyberQuest Academy</title>
+<meta name="description" content="A complete 22-module penetration testing foundations course. From safe lab setup through Python scripting, networking, offensive security, and a full capstone engagement. CyberQuest Academy by GeeksDane Consultancy.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0A0E1A;--surface:#0F1525;--card:#141B2D;--border:#1E2A44;
+  --green:#00D46A;--green-dim:#004D27;--amber:#F5A623;--red:#FF4757;
+  --blue:#3D8EF0;--purple:#8B5CF6;--ink:#E2E8F0;--muted:#64748B;--dim:#334155;
+  --radius:10px;--font-code:'JetBrains Mono',monospace;
+  --font-body:'Inter',sans-serif;--font-head:'Space Grotesk',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-body);line-height:1.65;-webkit-font-smoothing:antialiased;}
+a{color:var(--green);text-decoration:none;}
+:focus-visible{outline:2px solid var(--green);outline-offset:3px;border-radius:4px;}
+
+/* ── LAYOUT ── */
+.site-wrap{display:grid;grid-template-columns:260px 1fr;min-height:100vh;}
+.sidebar{position:sticky;top:0;height:100vh;overflow-y:auto;background:var(--surface);border-right:1px solid var(--border);}
+.main{max-width:960px;padding:0 44px 120px;}
+@media(max-width:1000px){
+  .site-wrap{grid-template-columns:1fr;}
+  .sidebar{position:fixed;top:0;left:0;width:280px;height:100vh;z-index:100;transform:translateX(-100%);transition:transform .25s ease;}
+  .sidebar.open{transform:translateX(0);}
+  .main{padding:76px 20px 100px;}
+}
+
+/* ── SIDEBAR ── */
+.sb-head{padding:22px 20px 16px;border-bottom:1px solid var(--border);}
+.sb-logo{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.sb-logo-mark{width:44px;height:44px;flex-shrink:0;}
+.sb-logo-text{font-family:var(--font-code);font-size:.78rem;font-weight:700;color:var(--green);letter-spacing:.06em;}
+.sb-logo-sub{font-size:.7rem;color:var(--muted);letter-spacing:.04em;}
+.sb-course-tag{display:inline-flex;align-items:center;gap:6px;background:var(--green-dim);border:1px solid var(--green);color:var(--green);font-family:var(--font-code);font-size:.68rem;letter-spacing:.08em;padding:4px 10px;border-radius:4px;}
+.sb-progress{padding:14px 20px;border-bottom:1px solid var(--border);}
+.sb-progress-label{font-size:.72rem;color:var(--muted);font-family:var(--font-code);letter-spacing:.06em;margin-bottom:8px;display:flex;justify-content:space-between;}
+.progress-bar{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--green),#00F5A0);border-radius:2px;transition:width .4s ease;width:0%;}
+.sb-nav{padding:10px 0 20px;}
+.sb-section{padding:8px 20px 4px;font-family:var(--font-code);font-size:.63rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);}
+.sb-link{display:flex;align-items:center;gap:10px;padding:8px 20px;font-size:.85rem;color:var(--muted);cursor:pointer;border-left:2px solid transparent;transition:all .15s;}
+.sb-link:hover{color:var(--ink);background:rgba(255,255,255,.03);}
+.sb-link.active{color:var(--green);border-left-color:var(--green);background:rgba(0,212,106,.06);}
+.sb-dot{width:6px;height:6px;border-radius:50%;background:var(--dim);flex-shrink:0;transition:background .2s;}
+.sb-link.done .sb-dot{background:var(--green);}
+.sb-num{font-family:var(--font-code);font-size:.64rem;color:var(--dim);margin-left:auto;flex-shrink:0;}
+
+/* ── TOP NAV ── */
+.topnav{display:none;position:fixed;top:0;left:0;right:0;z-index:90;background:rgba(10,14,26,.94);backdrop-filter:blur(6px);border-bottom:1px solid var(--border);padding:11px 20px;align-items:center;justify-content:space-between;}
+.topnav .tn-title{font-family:var(--font-code);font-size:.8rem;color:var(--green);}
+.menu-btn{background:none;border:1px solid var(--border);color:var(--ink);padding:6px 10px;border-radius:6px;cursor:pointer;}
+@media(max-width:1000px){.topnav{display:flex;}}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:95;}
+.overlay.show{display:block;}
+
+/* ── HERO ── */
+.hero{padding:60px 0 44px;border-bottom:1px solid var(--border);}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--green-dim);border:1px solid rgba(0,212,106,.4);color:var(--green);font-family:var(--font-code);font-size:.7rem;letter-spacing:.1em;padding:5px 14px;border-radius:4px;margin-bottom:26px;}
+.hero-badge .pulse{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 2s ease-in-out infinite;}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(0,212,106,.6);}50%{box-shadow:0 0 0 6px rgba(0,212,106,0);}}
+.hero h1{font-family:var(--font-head);font-size:clamp(2rem,3.8vw,3rem);font-weight:700;line-height:1.06;margin-bottom:16px;letter-spacing:-.02em;}
+.hero h1 .accent{color:var(--green);}
+.hero-stats{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:26px;}
+.stat{display:flex;align-items:center;gap:7px;font-family:var(--font-code);font-size:.76rem;color:var(--muted);background:var(--card);border:1px solid var(--border);padding:6px 12px;border-radius:6px;}
+.hero-desc{max-width:66ch;color:#94A3B8;font-size:1rem;margin-bottom:28px;}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap;}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:11px 20px;border-radius:8px;font-weight:600;font-size:.9rem;cursor:pointer;border:none;transition:transform .15s,box-shadow .15s;}
+.btn-green{background:var(--green);color:#000;}
+.btn-green:hover{transform:translateY(-2px);box-shadow:0 8px 20px -6px rgba(0,212,106,.5);}
+.btn-outline{background:transparent;border:1px solid var(--border);color:var(--ink);}
+.btn-outline:hover{border-color:var(--green);color:var(--green);}
+
+/* ── TERMINAL ── */
+.terminal{background:#020509;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin:28px 0;font-family:var(--font-code);}
+.term-bar{display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--surface);border-bottom:1px solid var(--border);}
+.td{width:11px;height:11px;border-radius:50%;}
+.term-title{font-size:.7rem;color:var(--muted);margin-left:auto;}
+.term-body{padding:18px 20px;font-size:.84rem;line-height:1.75;}
+.tp{color:var(--green);}
+.tc{color:#94A3B8;}
+.tcom{color:var(--muted);font-style:italic;}
+.tb{color:var(--amber);}
+.tg{color:var(--green);}
+.tm{color:#C084FC;}
+.tr{color:var(--red);}
+.ti{color:var(--blue);}
+
+/* ── TIER SECTIONS ── */
+.tier-section{padding:52px 0;border-bottom:1px solid var(--border);}
+.tier-eyebrow{font-family:var(--font-code);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--green);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.tier-eyebrow::before{content:"";width:18px;height:1px;background:var(--green);}
+.tier-title{font-family:var(--font-head);font-size:1.55rem;font-weight:700;margin-bottom:8px;letter-spacing:-.01em;}
+.tier-desc{color:#94A3B8;font-size:.95rem;margin-bottom:28px;max-width:60ch;}
+.modules-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+@media(max-width:700px){.modules-grid{grid-template-columns:1fr;}}
+
+/* ── MODULE CARDS ── */
+.mod-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px 22px;display:flex;flex-direction:column;gap:10px;transition:border-color .2s,transform .15s;cursor:pointer;text-decoration:none;}
+.mod-card:hover{border-color:var(--green);transform:translateY(-2px);}
+.mod-card.optional{border-style:dashed;}
+.mod-head{display:flex;align-items:center;gap:10px;}
+.mod-num{font-family:var(--font-code);font-size:.7rem;font-weight:700;color:var(--green);background:var(--green-dim);border:1px solid rgba(0,212,106,.3);padding:2px 8px;border-radius:3px;flex-shrink:0;}
+.mod-title{font-family:var(--font-head);font-size:.98rem;font-weight:700;color:var(--ink);}
+.mod-desc{color:#94A3B8;font-size:.85rem;line-height:1.5;}
+.mod-tags{display:flex;flex-wrap:wrap;gap:6px;}
+.tag{font-family:var(--font-code);font-size:.65rem;padding:2px 8px;border-radius:3px;border:1px solid var(--border);color:var(--muted);}
+.tag-lab{background:rgba(0,212,106,.07);color:var(--green);border-color:rgba(0,212,106,.25);}
+.tag-script{background:rgba(61,142,240,.07);color:var(--blue);border-color:rgba(61,142,240,.25);}
+.tag-theory{background:rgba(139,92,246,.07);color:var(--purple);border-color:rgba(139,92,246,.25);}
+.tag-optional{background:rgba(245,166,35,.07);color:var(--amber);border-color:rgba(245,166,35,.25);}
+.mod-check{margin-top:4px;display:flex;align-items:center;gap:8px;font-size:.8rem;color:var(--muted);font-family:var(--font-code);}
+.mod-check input{accent-color:var(--green);cursor:pointer;}
+.mod-link-row{display:flex;align-items:center;justify-content:space-between;margin-top:4px;}
+.mod-link{font-family:var(--font-code);font-size:.72rem;color:var(--green);display:flex;align-items:center;gap:4px;}
+
+/* ── CALLOUTS ── */
+.callout{display:flex;gap:14px;border-radius:8px;padding:14px 18px;margin:18px 0;font-size:.9rem;}
+.callout-warn{background:rgba(245,166,35,.06);border:1px solid rgba(245,166,35,.3);}
+.callout-info{background:rgba(61,142,240,.06);border:1px solid rgba(61,142,240,.25);}
+.callout-body p{color:#94A3B8;}
+.callout-body strong{color:var(--ink);}
+
+/* ── PROGRESS OVERVIEW ── */
+.overview-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:24px 0;}
+@media(max-width:800px){.overview-grid{grid-template-columns:repeat(2,1fr);}}
+.ov-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px 14px;text-align:center;}
+.ov-num{font-family:var(--font-code);font-size:1.4rem;font-weight:700;color:var(--green);margin-bottom:4px;}
+.ov-label{font-size:.76rem;color:var(--muted);}
+.ov-bar{height:3px;background:var(--border);border-radius:2px;margin-top:8px;}
+.ov-fill{height:100%;background:var(--green);border-radius:2px;width:0%;transition:width .5s ease;}
+
+/* ── FOOTER ── */
+.course-footer{padding:40px 0;text-align:center;font-family:var(--font-code);font-size:.76rem;color:var(--muted);}
+.course-footer a{color:var(--green);}
+.mt-4{margin-top:16px;}
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <span class="tn-title">⟩ CyberQuest · Course 01</span>
+  <button class="menu-btn" id="menuBtn">☰</button>
+</nav>
+<div class="overlay" id="overlay"></div>
+
+<div class="site-wrap">
+
+<!-- ── SIDEBAR ── -->
+<aside class="sidebar" id="sidebar">
+  <div class="sb-head">
+    <div class="sb-logo">
+      <div class="sb-logo-mark">
+        <svg viewBox="0 0 100 115" fill="none" xmlns="http://www.w3.org/2000/svg" width="44" height="44">
+          <path d="M50,4 L96,28 L96,62 Q96,95 50,112 Q4,95 4,62 L4,28 Z" fill="#00D46A"/>
+          <path d="M50,14 L86,34 L86,62 Q86,88 50,103 Q14,88 14,62 L14,34 Z" fill="#0A0E1A"/>
+          <rect x="46" y="38" width="8" height="50" rx="2" fill="#00D46A"/>
+          <path d="M46,40 Q20,34 12,42 L12,84 Q20,76 46,82 Z" fill="#0D4A32"/>
+          <path d="M54,40 Q80,34 88,42 L88,84 Q80,76 54,82 Z" fill="#0A3D28"/>
+          <text x="71" y="68" font-family="monospace" font-weight="700" font-size="17" fill="#00D46A" text-anchor="middle">&gt;_</text>
+          <line x1="18" y1="52" x2="42" y2="50" stroke="#00D46A" stroke-width="2.5" stroke-linecap="round" opacity="0.55"/>
+          <line x1="18" y1="62" x2="42" y2="60" stroke="#00D46A" stroke-width="2.5" stroke-linecap="round" opacity="0.38"/>
+          <line x1="18" y1="72" x2="34" y2="70" stroke="#00D46A" stroke-width="2.5" stroke-linecap="round" opacity="0.22"/>
+        </svg>
+      </div>
+      <div>
+        <div class="sb-logo-text">CyberQuest</div>
+        <div class="sb-logo-sub">by GeeksDane Consultancy</div>
+      </div>
+    </div>
+    <span class="sb-course-tag">▸ Course 01 · Foundations</span>
+  </div>
+  <div class="sb-progress">
+    <div class="sb-progress-label"><span>Progress</span><span id="progressPct">0%</span></div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+  <nav class="sb-nav">
+    <div class="sb-section">Overview</div>
+    <div class="sb-link active" data-target="hero"><div class="sb-dot"></div><span>Course Overview</span></div>
+
+    <div class="sb-section">Tier 0 · Foundations</div>
+    <div class="sb-link" data-target="tier0"><div class="sb-dot"></div><span>Safe Lab Setup</span><span class="sb-num">01</span></div>
+    <div class="sb-link" data-target="tier0"><div class="sb-dot"></div><span>Linux & CLI</span><span class="sb-num">02</span></div>
+    <div class="sb-link" data-target="tier0"><div class="sb-dot"></div><span>Git & GitHub</span><span class="sb-num">03</span></div>
+    <div class="sb-link" data-target="tier0"><div class="sb-dot"></div><span>Python I & II</span><span class="sb-num">04–05</span></div>
+    <div class="sb-link" data-target="tier0"><div class="sb-dot"></div><span>Python Data & Files</span><span class="sb-num">06</span></div>
+
+    <div class="sb-section">Tier 1 · Networking</div>
+    <div class="sb-link" data-target="tier1"><div class="sb-dot"></div><span>Networking Fundamentals</span><span class="sb-num">07</span></div>
+    <div class="sb-link" data-target="tier1"><div class="sb-dot"></div><span>Python Networking</span><span class="sb-num">08</span></div>
+    <div class="sb-link" data-target="tier1"><div class="sb-dot"></div><span>Recon & OSINT</span><span class="sb-num">09</span></div>
+    <div class="sb-link" data-target="tier1"><div class="sb-dot"></div><span>Scanning & Enum</span><span class="sb-num">10</span></div>
+    <div class="sb-link" data-target="tier1"><div class="sb-dot"></div><span>Scapy & Traffic</span><span class="sb-num">11</span></div>
+
+    <div class="sb-section">Tier 2 · Offensive</div>
+    <div class="sb-link" data-target="tier2"><div class="sb-dot"></div><span>Cryptography</span><span class="sb-num">12</span></div>
+    <div class="sb-link" data-target="tier2"><div class="sb-dot"></div><span>Web App I & II</span><span class="sb-num">13–14</span></div>
+    <div class="sb-link" data-target="tier2"><div class="sb-dot"></div><span>Auth & Passwords</span><span class="sb-num">15</span></div>
+    <div class="sb-link" data-target="tier2"><div class="sb-dot"></div><span>Vuln & Exploitation</span><span class="sb-num">16</span></div>
+
+    <div class="sb-section">Tier 3 · Advanced</div>
+    <div class="sb-link" data-target="tier3"><div class="sb-dot"></div><span>Post-Exploitation</span><span class="sb-num">17</span></div>
+    <div class="sb-link" data-target="tier3"><div class="sb-dot"></div><span>Wireless & Malware</span><span class="sb-num">18–19</span></div>
+    <div class="sb-link" data-target="tier3"><div class="sb-dot"></div><span>Blue-Team Automation</span><span class="sb-num">20</span></div>
+
+    <div class="sb-section">Tier 4 · Capstone</div>
+    <div class="sb-link" data-target="tier4"><div class="sb-dot"></div><span>Professional Reporting</span><span class="sb-num">21</span></div>
+    <div class="sb-link" data-target="tier4"><div class="sb-dot"></div><span>Capstone Engagement</span><span class="sb-num">22</span></div>
+
+    <div class="sb-section">Related</div>
+    <div class="sb-link" onclick="window.open('https://herculis411.github.io/cyberquest-academy/02-web-vapt/','_self')"><div class="sb-dot"></div><span>Course 02 · VAPT →</span></div>
+    <div class="sb-link" onclick="window.open('https://herculis411.github.io/cyberquest-academy/','_self')"><div class="sb-dot"></div><span>← Academy Home</span></div>
+  </nav>
+</aside>
+
+<!-- ── MAIN ── -->
+<main class="main">
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-badge"><span class="pulse"></span>COURSE 01 · 22 MODULES</div>
+  <h1>Penetration Testing<br><span class="accent">Foundations</span></h1>
+  <div class="hero-stats">
+    <span class="stat">⏱ 60–80 hours total</span>
+    <span class="stat">📦 22 modules</span>
+    <span class="stat">🔬 Lab-only · isolated Docker</span>
+    <span class="stat">🐍 Python-automated</span>
+    <span class="stat">⭐ Beginner → Professional</span>
+  </div>
+  <p class="hero-desc">A complete, ethics-first path from absolute beginner to a full authorised penetration testing engagement. You will build a safe lab, master Linux and Python scripting, understand networking at the packet level, carry out offensive techniques lab-only, and graduate with a professional capstone report.</p>
+  <div class="hero-ctas">
+    <a class="btn btn-green" href="https://herculis411.github.io/cyberquest-academy/00-ethics-law/">▶ Start with Module 00</a>
+    <a class="btn btn-outline" href="https://herculis411.github.io/cyberquest-academy/">← Back to Academy</a>
+  </div>
+
+  <div class="terminal">
+    <div class="term-bar">
+      <div class="td" style="background:#FF5F56"></div>
+      <div class="td" style="background:#FFBD2E"></div>
+      <div class="td" style="background:#27C93F"></div>
+      <span class="term-title">student@cyberquest-lab:~/cyberquest-academy</span>
+    </div>
+    <div class="term-body">
+      <div><span class="tp">student@lab</span><span class="tc">:~$ </span><span class="tc">tree docs/ --dirsfirst -L 1</span></div>
+      <div class="tc mt-2" style="margin-top:10px;">docs/</div>
+      <div><span class="tcom">├── </span><span class="tb">00-ethics-law.md</span><span class="tcom">     # Hard gate · CMA 1990 · authorisation</span></div>
+      <div><span class="tcom">├── </span><span class="tg">Tier 0 · Foundations</span></div>
+      <div><span class="tcom">│   ├── </span><span class="tc">01-safe-lab.md</span><span class="tcom">       # Docker · host-only net · isolation</span></div>
+      <div><span class="tcom">│   ├── </span><span class="tc">02-linux-cli.md</span><span class="tcom">      # FS · perms · bash · essential tools</span></div>
+      <div><span class="tcom">│   ├── </span><span class="tc">03-git.md</span><span class="tcom">            # Version control · lab evidence</span></div>
+      <div><span class="tcom">│   ├── </span><span class="ti">04-python-1.md</span><span class="tcom">       # Variables · control · functions</span></div>
+      <div><span class="tcom">│   ├── </span><span class="ti">05-python-2.md</span><span class="tcom">       # OOP · error handling · regex</span></div>
+      <div><span class="tcom">│   └── </span><span class="ti">06-python-files.md</span><span class="tcom">   # JSON · CSV · data parsing</span></div>
+      <div><span class="tcom">├── </span><span class="tg">Tier 1 · Networking & Automation Core</span></div>
+      <div><span class="tcom">│   ├── </span><span class="tc">07-networking.md</span><span class="tcom">     # TCP/IP · OSI · packets</span></div>
+      <div><span class="tcom">│   ├── </span><span class="ti">08-python-networking.md</span><span class="tcom">  # Sockets · HTTP · scripting</span></div>
+      <div><span class="tcom">│   ├── </span><span class="tc">09-recon-osint.md</span><span class="tcom">    # Passive/active recon · Shodan</span></div>
+      <div><span class="tcom">│   ├── </span><span class="tc">10-scanning.md</span><span class="tcom">       # Nmap · port scan · enumeration</span></div>
+      <div><span class="tcom">│   └── </span><span class="tc">11-scapy.md</span><span class="tcom">          # Packet crafting · Wireshark</span></div>
+      <div><span class="tcom">├── </span><span class="tm">Tier 2 · Offensive Security</span></div>
+      <div><span class="tcom">│   ├── </span><span class="tc">12-cryptography.md</span><span class="tcom">   # Hashing · TLS · PKI</span></div>
+      <div><span class="tcom">│   ├── </span><span class="tm">13-webapp-1.md</span><span class="tcom">       # OWASP · Burp · HTTP</span></div>
+      <div><span class="tcom">│   ├── </span><span class="tm">14-webapp-2.md</span><span class="tcom">       # SQLi · XSS · auth bypass</span></div>
+      <div><span class="tcom">│   ├── </span><span class="tm">15-auth-passwords.md</span><span class="tcom"> # Credential attacks · cracking</span></div>
+      <div><span class="tcom">│   └── </span><span class="tm">16-exploitation.md</span><span class="tcom">   # CVEs · Metasploit · manual</span></div>
+      <div><span class="tcom">├── </span><span class="tr">Tier 3 · Advanced & Specialisation</span></div>
+      <div><span class="tcom">│   ├── </span><span class="tr">17-post-exploitation.md</span><span class="tcom">  # PrivEsc · persistence · pivoting</span></div>
+      <div><span class="tcom">│   ├── </span><span class="tb">18-wireless.md</span><span class="tcom">       # WPA2 · Evil Twin [optional]</span></div>
+      <div><span class="tcom">│   ├── </span><span class="tb">19-malware-analysis.md</span><span class="tcom">   # Static/dynamic analysis [optional]</span></div>
+      <div><span class="tcom">│   └── </span><span class="ti">20-blue-team.md</span><span class="tcom">      # SIEM · detection · alerting</span></div>
+      <div><span class="tcom">└── </span><span class="tg">Tier 4 · Professional & Capstone</span></div>
+      <div><span class="tcom">    ├── </span><span class="tg">21-reporting.md</span><span class="tcom">      # CVSS · exec summary · remediation</span></div>
+      <div><span class="tcom">    ├── </span><span class="tg">22-capstone.md</span><span class="tcom">       # Full authorised engagement</span></div>
+      <div><span class="tcom">    └── </span><span class="tg">22-capstone-procedure.md</span><span class="tcom">  # Step-by-step lab procedure</span></div>
+      <div class="mt-2"><span class="tp">student@lab</span><span class="tc">:~$ </span><span class="tc">echo "22 modules. Ethics first. Lab only."</span></div>
+      <div class="tg">22 modules. Ethics first. Lab only.</div>
+    </div>
+  </div>
+
+  <!-- Course overview stats -->
+  <div class="overview-grid">
+    <div class="ov-card"><div class="ov-num">1</div><div class="ov-label">Ethics Gate</div><div class="ov-bar"><div class="ov-fill" id="ov0"></div></div></div>
+    <div class="ov-card"><div class="ov-num">6</div><div class="ov-label">Tier 0 · Foundations</div><div class="ov-bar"><div class="ov-fill" id="ov1"></div></div></div>
+    <div class="ov-card"><div class="ov-num">5</div><div class="ov-label">Tier 1 · Networking</div><div class="ov-bar"><div class="ov-fill" id="ov2"></div></div></div>
+    <div class="ov-card"><div class="ov-num">5</div><div class="ov-label">Tier 2 · Offensive</div><div class="ov-bar"><div class="ov-fill" id="ov3"></div></div></div>
+    <div class="ov-card"><div class="ov-num">5</div><div class="ov-label">Tier 3–4 · Capstone</div><div class="ov-bar"><div class="ov-fill" id="ov4"></div></div></div>
+  </div>
+</section>
+
+<!-- ETHICS GATE -->
+<section class="tier-section" id="ethics">
+  <div class="tier-eyebrow">Mandatory Gate · Complete First</div>
+  <div class="tier-title">Module 00 · Ethics, Law & Authorisation</div>
+  <p class="tier-desc">The hard gate. No practical module is accessible until this is done. The Computer Misuse Act 1990, authorisation, scope, and responsible disclosure — the foundation everything else is built on.</p>
+
+  <div class="callout callout-warn">
+    <span style="font-size:1rem;flex-shrink:0;margin-top:2px;">⚖</span>
+    <div class="callout-body"><p><strong>Permission is the line between a penetration tester and a criminal.</strong> Complete Module 00 and pass the checkpoint quiz before proceeding to any other module.</p></div>
+  </div>
+
+  <a class="mod-card" href="https://herculis411.github.io/cyberquest-academy/00-ethics-law/" style="max-width:480px;border-color:rgba(245,166,35,.4);">
+    <div class="mod-head">
+      <span class="mod-num" style="background:rgba(245,166,35,.12);color:var(--amber);border-color:rgba(245,166,35,.3);">00</span>
+      <span class="mod-title">Ethics, Law & Authorisation</span>
+    </div>
+    <div class="mod-desc">Computer Misuse Act 1990, the one idea that matters (authorisation), scope documents, rules of engagement, and responsible disclosure. Write your first RoE as a lab deliverable.</div>
+    <div class="mod-tags">
+      <span class="tag tag-theory">Theory</span>
+      <span class="tag tag-lab">Lab · RoE document</span>
+      <span class="tag" style="background:rgba(245,166,35,.07);color:var(--amber);border-color:rgba(245,166,35,.25);">Mandatory gate</span>
+    </div>
+    <div class="mod-link-row">
+      <label class="mod-check" onclick="event.stopPropagation()"><input type="checkbox" class="progress-cb" data-tier="0"> Mark complete</label>
+      <span class="mod-link">Open module ↗</span>
+    </div>
+  </a>
+</section>
+
+<!-- TIER 0 -->
+<section class="tier-section" id="tier0">
+  <div class="tier-eyebrow">Tier 0 · Foundations</div>
+  <div class="tier-title">Build Your Platform</div>
+  <p class="tier-desc">Six modules that give you the technical bedrock every penetration tester operates from — a safe isolated lab, Linux fluency, version control, and Python scripting from first principles to file automation.</p>
+
+  <div class="modules-grid">
+    <a class="mod-card" href="https://herculis411.github.io/cyberquest-academy/01-safe-lab/">
+      <div class="mod-head"><span class="mod-num">01</span><span class="mod-title">Building Your Safe Lab</span></div>
+      <div class="mod-desc">Docker Desktop, host-only networking, isolated vulnerable targets. Prove network isolation before touching any offensive tool.</div>
+      <div class="mod-tags"><span class="tag tag-lab">Lab · isolation proof</span><span class="tag">Docker</span><span class="tag">VirtualBox</span></div>
+      <div class="mod-link-row"><label class="mod-check" onclick="event.stopPropagation()"><input type="checkbox" class="progress-cb" data-tier="1"> Mark complete</label><span class="mod-link">Open ↗</span></div>
+    </a>
+    <a class="mod-card" href="https://herculis411.github.io/cyberquest-academy/02-linux-cli/">
+      <div class="mod-head"><span class="mod-num">02</span><span class="mod-title">Linux & Command-Line</span></div>
+      <div class="mod-desc">File system navigation, permissions, process management, bash scripting, pipes and redirects, and the essential tools every pentester uses daily.</div>
+      <div class="mod-tags"><span class="tag tag-lab">Lab · bash scripts</span><span class="tag">Kali Linux</span><span class="tag">Bash</span></div>
+      <div class="mod-link-row"><label class="mod-check" onclick="event.stopPropagation()"><input type="checkbox" class="progress-cb" data-tier="1"> Mark complete</label><span class="mod-link">Open ↗</span></div>
+    </a>
+    <a class="mod-card" href="https://herculis411.github.io/cyberquest-academy/03-git/">
+      <div class="mod-head"><span class="mod-num">03</span><span class="mod-title">Git & GitHub</span></div>
+      <div class="mod-desc">Version control for your scripts, lab evidence, and reports. Branching, committing, and pushing — the professional habit that separates practitioners from hobbyists.</div>
+      <div class="mod-tags"><span class="tag tag-lab">Lab · repo setup</span><span class="tag">Git</span><span class="tag">GitHub</span></div>
+      <div class="mod-link-row"><label class="mod-check" onclick="event.stopPropagation()"><input type="checkbox" class="progress-cb" data-tier="1"> Mark complete</label><span class="mod-link">Open ↗</span></div>
+    </a>
+    <a class="mod-card" href="https://herculis411.github.io/cyberquest-academy/04-python-1/">
+      <div class="mod-head"><span class="mod-num">04</span><span class="mod-title">Python Fundamentals I</span></div>
+      <div class="mod-desc">Variables, data types, control flow, functions, and file I/O. The Python you need to start writing your own security tooling from scratch.</div>
+      <div class="mod-tags"><span class="tag tag-script">Scripting</span><span class="tag">Python 3</span><span class="tag tag-lab">Lab · scripts</span></div>
+      <div class="mod-link-row"><label class="mod-check" onclick="event.stopPropagation()"><input type="checkbox" class="progress-cb" data-tier="1"> Mark complete</label><span class="mod-link">Open ↗</span></div>
+    </a>
+    <a class="mod-card" href="https://herculis411.github.io/cyberquest-academy/05-python-2/">
+      <div class="mod-head"><span class="mod-num">05</span><span class="mod-title">Python Fundamentals II</span></div>
+      <div class="mod-desc">Object-oriented programming, error handling, modules, regex, and the standard library tools used in every security automation script.</div>
+      <div class="mod-tags"><span class="tag tag-script">Scripting</span><span class="tag">OOP</span><span class="tag">Regex</span></div>
+      <div class="mod-link-row"><label class="mod-check" onclick="event.stopPropagation()"><input type="checkbox" class="progress-cb" data-tier="1"> Mark complete</label><span class="mod-link">Open ↗</span></div>
+    </a>
+    <a class="mod-card" href="https://herculis411.github.io/cyberquest-academy/06-python-files/">
+      <div class="mod-head"><span class="mod-num">06</span><span class="mod-title">Python for Files & Data</span></div>
+      <div class="mod-desc">JSON and CSV parsing, log file automation, data transformation, and building the data-handling scripts that power recon and reporting pipelines.</div>
+      <div class="mod-tags"><span class="tag tag-script">Scripting</span><span class="tag">JSON</span><span class="tag">CSV</span><span class="tag tag-lab">Lab · parser</span></div>
+      <div class="mod-link-row"><label class="mod-check" onclick="event.stopPropagation()"><input type="checkbox" class="progress-cb" data-tier="1"> Mark complete</label><span class="mod-link">Open ↗</span></div>
+    </a>
+  </div>
+</section>
+
+<!-- TIER 1 -->
+<section class="tier-section" id="tier1">
+  <div class="tier-eyebrow">Tier 1 · Networking & Automation Core</div>
+  <div class="tier-title">Understand the Wire</div>
+  <p class="tier-desc">Five modules covering the networking knowledge and Python automation that underpin every active offensive technique — from passive OSINT to live packet crafting against your lab target.</p>
+
+  <div class="modules-grid">
+    <a class="mod-card" href="https://herculis411.github.io/cyberquest-academy/07-networking/">
+      <div class="mod-head"><span class="mod-num">07</span><span class="mod-title">Networking Fundamentals</span></div>
+      <div class="mod-desc">TCP/IP stack, OSI model, IP addressing, DNS, HTTP/S, and packet structure. The theory that makes every scan output readable.</div>
+      <div class="mod-tags"><span class="tag tag-theory">Theory</span><span class="tag">TCP/IP</span><span class="tag">OSI</span><span class="tag">DNS</span></div>
+      <div class="mod-link-row"><label class="mod-check" onclick="event.stopPropagation()"><input type="checkbox" class="progress-cb" data-tier="2"> Mark complete</label><span class="mod-link">Open ↗</span></div>
+    </a>
+    <a class="mod-card" href="https://herculis411.github.io/cyberquest-academy/08-python-networking/">
+      <div class="mod-head"><span class="mod-num">08</span><span class="mod-title">Python Networking</span></div>
+      <div class="mod-desc">Sockets, HTTP requests with requests library, automated banner grabbing, and building your first Python network recon tool from scratch.</div>
+      <div class="mod-tags"><span class="tag tag-script">Scripting</span><span class="tag">Sockets</span><span class="tag tag-lab">Lab · recon tool</span></div>
+      <div class="mod-link-row"><label class="mod-check" onclick="event.stopPropagation()"><input type="checkbox" class="progress-cb" data-tier="2"> Mark complete</label><span class="mod-link">Open ↗</span></div>
+    </a>
+    <a class="mod-card" href="https://herculis411.github.io/cyberquest-academy/09-recon-osint/">
+      <div class="mod-head"><span class="mod-num">09</span><span class="mod-title">Recon & OSINT</span></div>
+      <div class="mod-desc">Passive and active reconnaissance — WHOIS, DNS enumeration, Google dorking, Shodan, theHarvester, and automating recon pipelines with Python.</div>
+      <div class="mod-tags"><span class="tag tag-lab">Lab · OSINT script</span><span class="tag">Shodan</span><span class="tag">theHarvester</span></div>
+      <div class="mod-link-row"><label class="mod-check" onclick="event.stopPropagation()"><input type="checkbox" class="progress-cb" data-tier="2"> Mark complete</label><span class="mod-link">Open ↗</span></div>
+    </a>
+    <a class="mod-card" href="https://herculis411.github.io/cyberquest-academy/10-scanning/">
+      <div class="mod-head"><span class="mod-num">10</span><span class="mod-title">Scanning & Enumeration</span></div>
+      <div class="mod-desc">Nmap from first principles — port scanning techniques, service and OS fingerprinting, banner grabbing, scripting Nmap with NSE and python-nmap.</div>
+      <div class="mod-tags"><span class="tag tag-lab">Lab · Nmap scans</span><span class="tag">Nmap</span><span class="tag tag-script">NSE scripting</span></div>
+      <div class="mod-link-row"><label class="mod-check" onclick="event.stopPropagation()"><input type="checkbox" class="progress-cb" data-tier="2"> Mark complete</label><span class="mod-link">Open ↗</span></div>
+    </a>
+    <a class="mod-card" href="https://herculis411.github.io/cyberquest-academy/11-scapy/">
+      <div class="mod-head"><span class="mod-num">11</span><span class="mod-title">Scapy & Traffic Analysis</span></div>
+      <div class="mod-desc">Packet crafting with Scapy, Wireshark traffic analysis, protocol dissection, and building a Python-based packet sniffer and analyser against lab traffic.</div>
+      <div class="mod-tags"><span class="tag tag-lab">Lab · sniffer</span><span class="tag">Scapy</span><span class="tag">Wireshark</span></div>
+      <div class="mod-link-row"><label class="mod-check" onclick="event.stopPropagation()"><input type="checkbox" class="progress-cb" data-tier="2"> Mark complete</label><span class="mod-link">Open ↗</span></div>
+    </a>
+  </div>
+</section>
+
+<!-- TIER 2 -->
+<section class="tier-section" id="tier2">
+  <div class="tier-eyebrow">Tier 2 · Offensive Security</div>
+  <div class="tier-title">Controlled Exploitation</div>
+  <p class="tier-desc">Five modules of lab-only offensive techniques — every exploit is run against your own Docker targets, every technique is paired with the defensive countermeasure. Offence in service of defence.</p>
+
+  <div class="callout callout-info">
+    <span style="font-size:1rem;flex-shrink:0;margin-top:2px;">🔬</span>
+    <div class="callout-body"><p><strong>All techniques in this tier target lab-only Docker containers on 127.0.0.1.</strong> Module 00 must be complete before proceeding. These skills are taught so you can defend — not attack systems you don't own.</p></div>
+  </div>
+
+  <div class="modules-grid">
+    <a class="mod-card" href="https://herculis411.github.io/cyberquest-academy/12-cryptography/">
+      <div class="mod-head"><span class="mod-num">12</span><span class="mod-title">Cryptography Essentials</span></div>
+      <div class="mod-desc">Hashing algorithms, symmetric and asymmetric encryption, TLS handshake, certificate chains, and cracking weak implementations in the lab to understand where they break.</div>
+      <div class="mod-tags"><span class="tag tag-theory">Theory</span><span class="tag">Hashing</span><span class="tag">TLS</span><span class="tag tag-lab">Lab · hash cracking</span></div>
+      <div class="mod-link-row"><label class="mod-check" onclick="event.stopPropagation()"><input type="checkbox" class="progress-cb" data-tier="3"> Mark complete</label><span class="mod-link">Open ↗</span></div>
+    </a>
+    <a class="mod-card" href="https://herculis411.github.io/cyberquest-academy/13-webapp-1/">
+      <div class="mod-head"><span class="mod-num">13</span><span class="mod-title">Web App Security I</span></div>
+      <div class="mod-desc">OWASP Top 10 fundamentals, Burp Suite Community setup and workflow, HTTP request/response anatomy, and your first hands-on Juice Shop lab sessions.</div>
+      <div class="mod-tags"><span class="tag tag-lab">Lab · Juice Shop</span><span class="tag">Burp Suite</span><span class="tag">OWASP</span></div>
+      <div class="mod-link-row"><label class="mod-check" onclick="event.stopPropagation()"><input type="checkbox" class="progress-cb" data-tier="3"> Mark complete</label><span class="mod-link">Open ↗</span></div>
+    </a>
+    <a class="mod-card" href="https://herculis411.github.io/cyberquest-academy/14-webapp-2/">
+      <div class="mod-head"><span class="mod-num">14</span><span class="mod-title">Web App Security II</span></div>
+      <div class="mod-desc">Advanced web vulnerabilities — SQL injection, XSS, IDOR, authentication bypass, SSRF, and insecure deserialization. All exploited against DVWA with defensive fixes applied after each.</div>
+      <div class="mod-tags"><span class="tag tag-lab">Lab · SQLi · XSS</span><span class="tag">DVWA</span><span class="tag tag-script">sqlmap</span></div>
+      <div class="mod-link-row"><label class="mod-check" onclick="event.stopPropagation()"><input type="checkbox" class="progress-cb" data-tier="3"> Mark complete</label><span class="mod-link">Open ↗</span></div>
+    </a>
+    <a class="mod-card" href="https://herculis411.github.io/cyberquest-academy/15-auth-passwords/">
+      <div class="mod-head"><span class="mod-num">15</span><span class="mod-title">Authentication & Passwords</span></div>
+      <div class="mod-desc">Credential attack techniques — brute-force, dictionary, credential stuffing, password spraying, and hash cracking with Hashcat and John. Paired with detection and lockout defences.</div>
+      <div class="mod-tags"><span class="tag tag-lab">Lab · Hashcat</span><span class="tag">John</span><span class="tag">Hydra</span></div>
+      <div class="mod-link-row"><label class="mod-check" onclick="event.stopPropagation()"><input type="checkbox" class="progress-cb" data-tier="3"> Mark complete</label><span class="mod-link">Open ↗</span></div>
+    </a>
+    <a class="mod-card" href="https://herculis411.github.io/cyberquest-academy/16-exploitation/">
+      <div class="mod-head"><span class="mod-num">16</span><span class="mod-title">Vulnerability ID & Exploitation</span></div>
+      <div class="mod-desc">CVE research, vulnerability scoring with CVSS, Metasploit framework fundamentals, and manual exploitation of lab targets. Understanding the full path from finding to proof of concept.</div>
+      <div class="mod-tags"><span class="tag tag-lab">Lab · Metasploit</span><span class="tag">CVE research</span><span class="tag">CVSS</span></div>
+      <div class="mod-link-row"><label class="mod-check" onclick="event.stopPropagation()"><input type="checkbox" class="progress-cb" data-tier="3"> Mark complete</label><span class="mod-link">Open ↗</span></div>
+    </a>
+  </div>
+</section>
+
+<!-- TIER 3 -->
+<section class="tier-section" id="tier3">
+  <div class="tier-eyebrow">Tier 3 · Advanced & Specialisation</div>
+  <div class="tier-title">Depth & Detection</div>
+  <p class="tier-desc">Four modules covering post-exploitation, optional specialisation paths, and — critically — switching to the defensive side to automate threat detection against the very activity you've been practising.</p>
+
+  <div class="modules-grid">
+    <a class="mod-card" href="https://herculis411.github.io/cyberquest-academy/17-post-exploitation/">
+      <div class="mod-head"><span class="mod-num">17</span><span class="mod-title">Post-Exploitation</span></div>
+      <div class="mod-desc">Privilege escalation, persistence mechanisms, lateral movement, and pivoting — all within the lab. Paired with detection rules showing exactly how each technique leaves forensic traces.</div>
+      <div class="mod-tags"><span class="tag tag-lab">Lab · PrivEsc</span><span class="tag">Pivoting</span><span class="tag">Persistence</span></div>
+      <div class="mod-link-row"><label class="mod-check" onclick="event.stopPropagation()"><input type="checkbox" class="progress-cb" data-tier="4"> Mark complete</label><span class="mod-link">Open ↗</span></div>
+    </a>
+    <a class="mod-card optional" href="https://herculis411.github.io/cyberquest-academy/18-wireless/">
+      <div class="mod-head"><span class="mod-num">18</span><span class="mod-title">Wireless Security</span></div>
+      <div class="mod-desc">WPA2 security model, Evil Twin attacks, deauthentication, and wireless reconnaissance — requires a compatible wireless adapter. Optional specialisation module.</div>
+      <div class="mod-tags"><span class="tag tag-optional">Optional</span><span class="tag">WPA2</span><span class="tag">Aircrack-ng</span></div>
+      <div class="mod-link-row"><label class="mod-check" onclick="event.stopPropagation()"><input type="checkbox" class="progress-cb" data-tier="4"> Mark complete</label><span class="mod-link">Open ↗</span></div>
+    </a>
+    <a class="mod-card optional" href="https://herculis411.github.io/cyberquest-academy/19-malware-analysis/">
+      <div class="mod-head"><span class="mod-num">19</span><span class="mod-title">Malware Analysis</span></div>
+      <div class="mod-desc">Static and dynamic malware analysis, sandboxing with Cuckoo, indicators of compromise, YARA rules, and understanding attacker tooling without running it on live systems.</div>
+      <div class="mod-tags"><span class="tag tag-optional">Optional</span><span class="tag">Cuckoo</span><span class="tag">YARA</span><span class="tag">IoC</span></div>
+      <div class="mod-link-row"><label class="mod-check" onclick="event.stopPropagation()"><input type="checkbox" class="progress-cb" data-tier="4"> Mark complete</label><span class="mod-link">Open ↗</span></div>
+    </a>
+    <a class="mod-card" href="https://herculis411.github.io/cyberquest-academy/20-blue-team/">
+      <div class="mod-head"><span class="mod-num">20</span><span class="mod-title">Blue-Team Automation</span></div>
+      <div class="mod-desc">SIEM fundamentals, detection rule engineering, log analysis automation with Python, and building alerting pipelines that detect the techniques from Tiers 2 and 3.</div>
+      <div class="mod-tags"><span class="tag tag-script">Python automation</span><span class="tag">SIEM</span><span class="tag tag-lab">Lab · detection</span></div>
+      <div class="mod-link-row"><label class="mod-check" onclick="event.stopPropagation()"><input type="checkbox" class="progress-cb" data-tier="4"> Mark complete</label><span class="mod-link">Open ↗</span></div>
+    </a>
+  </div>
+</section>
+
+<!-- TIER 4 -->
+<section class="tier-section" id="tier4">
+  <div class="tier-eyebrow">Tier 4 · Professional & Capstone</div>
+  <div class="tier-title">From Lab to Report</div>
+  <p class="tier-desc">Three modules that turn technical skill into professional output — structured reporting, a simulated full engagement, and a step-by-step capstone lab procedure that produces a real deliverable.</p>
+
+  <div class="modules-grid">
+    <a class="mod-card" href="https://herculis411.github.io/cyberquest-academy/21-reporting/">
+      <div class="mod-head"><span class="mod-num">21</span><span class="mod-title">Professional Reporting</span></div>
+      <div class="mod-desc">CVSS v3.1 scoring, executive summary writing, finding templates, remediation matrices, and how to communicate technical risk to non-technical stakeholders.</div>
+      <div class="mod-tags"><span class="tag">CVSS 3.1</span><span class="tag tag-lab">Lab · report draft</span><span class="tag">Remediation matrix</span></div>
+      <div class="mod-link-row"><label class="mod-check" onclick="event.stopPropagation()"><input type="checkbox" class="progress-cb" data-tier="5"> Mark complete</label><span class="mod-link">Open ↗</span></div>
+    </a>
+    <a class="mod-card" href="https://herculis411.github.io/cyberquest-academy/22-capstone/">
+      <div class="mod-head"><span class="mod-num">22</span><span class="mod-title">Capstone Engagement</span></div>
+      <div class="mod-desc">A complete simulated authorised engagement — scoping, recon, scanning, exploitation, post-exploitation, and a professional report — all against lab targets. The graduation deliverable.</div>
+      <div class="mod-tags"><span class="tag tag-lab">Full engagement lab</span><span class="tag">Scope to report</span></div>
+      <div class="mod-link-row"><label class="mod-check" onclick="event.stopPropagation()"><input type="checkbox" class="progress-cb" data-tier="5"> Mark complete</label><span class="mod-link">Open ↗</span></div>
+    </a>
+    <a class="mod-card" href="https://herculis411.github.io/cyberquest-academy/22-capstone-procedure/" style="grid-column:span 2;">
+      <div class="mod-head"><span class="mod-num">22b</span><span class="mod-title">Capstone — Full Lab Procedure</span></div>
+      <div class="mod-desc">The step-by-step command-level walkthrough of the full capstone engagement — every tool invocation, every finding, every screenshot prompt, from first recon command to signed report. The complete reference you follow during the final lab.</div>
+      <div class="mod-tags"><span class="tag tag-lab">Step-by-step procedure</span><span class="tag tag-script">All tools</span><span class="tag">Report template</span></div>
+      <div class="mod-link-row"><label class="mod-check" onclick="event.stopPropagation()"><input type="checkbox" class="progress-cb" data-tier="5"> Mark complete</label><span class="mod-link">Open ↗</span></div>
+    </a>
+  </div>
+
+  <div style="margin-top:32px;text-align:center;padding:28px;background:var(--card);border:1px solid var(--green);border-radius:var(--radius);">
+    <div style="font-family:var(--font-code);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:10px;">🏅 Graduation milestone</div>
+    <div style="font-family:var(--font-head);font-size:1.3rem;font-weight:700;margin-bottom:8px;">Complete all 22 modules + Capstone Report</div>
+    <div style="color:#94A3B8;font-size:.9rem;margin-bottom:20px;">You'll have: an isolated lab, Python automation scripts, a full VAPT toolkit, and a professional penetration test report — the complete portfolio of a junior penetration tester.</div>
+    <a class="btn btn-green" href="https://herculis411.github.io/cyberquest-academy/02-web-vapt/">Continue to Course 02 · Web App VAPT →</a>
+  </div>
+</section>
+
+<div class="course-footer">
+  <svg viewBox="0 0 100 115" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:38px;height:38px;margin:0 auto 14px;" aria-hidden="true">
+    <path d="M50,4 L96,28 L96,62 Q96,95 50,112 Q4,95 4,62 L4,28 Z" fill="#00D46A"/>
+    <path d="M50,14 L86,34 L86,62 Q86,88 50,103 Q14,88 14,62 L14,34 Z" fill="#0A0E1A"/>
+    <rect x="46" y="38" width="8" height="50" rx="2" fill="#00D46A"/>
+    <path d="M46,40 Q20,34 12,42 L12,84 Q20,76 46,82 Z" fill="#0D4A32"/>
+    <path d="M54,40 Q80,34 88,42 L88,84 Q80,76 54,82 Z" fill="#0A3D28"/>
+    <text x="71" y="68" font-family="monospace" font-weight="700" font-size="17" fill="#00D46A" text-anchor="middle">&gt;_</text>
+    <line x1="18" y1="52" x2="42" y2="50" stroke="#00D46A" stroke-width="2.5" stroke-linecap="round" opacity="0.55"/>
+    <line x1="18" y1="62" x2="42" y2="60" stroke="#00D46A" stroke-width="2.5" stroke-linecap="round" opacity="0.38"/>
+    <line x1="18" y1="72" x2="34" y2="70" stroke="#00D46A" stroke-width="2.5" stroke-linecap="round" opacity="0.22"/>
+  </svg>
+  <p>CyberQuest Academy — Course 01 · Penetration Testing Foundations · 22 Modules</p>
+  <p class="mt-4">© 2026 <a href="https://stephenodunze.online" target="_blank">GeeksDane Consultancy Ltd</a> · <a href="https://herculis411.github.io/cyberquest-academy/" target="_blank">Back to Academy</a> · <a href="https://herculis411.github.io/cyberquest-academy/02-web-vapt/" target="_blank">Course 02 →</a></p>
+</div>
+
+</main>
+</div>
+
+<script>
+// Mobile nav
+const menuBtn=document.getElementById('menuBtn'),sidebar=document.getElementById('sidebar'),overlay=document.getElementById('overlay');
+menuBtn.addEventListener('click',()=>{sidebar.classList.toggle('open');overlay.classList.toggle('show');});
+overlay.addEventListener('click',()=>{sidebar.classList.remove('open');overlay.classList.remove('show');});
+
+// Sidebar scroll tracking
+const sbLinks=document.querySelectorAll('.sb-link[data-target]');
+window.addEventListener('scroll',()=>{
+  let cur='';
+  document.querySelectorAll('[id]').forEach(s=>{if(window.scrollY>=s.offsetTop-120)cur=s.id;});
+  sbLinks.forEach(l=>l.classList.toggle('active',l.dataset.target===cur));
+},{passive:true});
+sbLinks.forEach(l=>l.addEventListener('click',()=>{
+  const el=document.getElementById(l.dataset.target);
+  if(el)el.scrollIntoView({behavior:'smooth'});
+  sidebar.classList.remove('open');overlay.classList.remove('show');
+}));
+
+// Progress tracking
+const progressCbs=document.querySelectorAll('.progress-cb');
+const fill=document.getElementById('progressFill');
+const pct=document.getElementById('progressPct');
+// Tier overview fills
+const tierCounts=[1,6,5,5,4,3]; // tiers 0-5
+const tierOvIds=['ov0','ov1','ov2','ov3','ov4','ov4']; // last two share ov4
+const KEY='cq_course01_prog_v2';
+
+function updateProgress(){
+  const done=[...progressCbs].filter(c=>c.checked).length;
+  const total=progressCbs.length;
+  const p=Math.round(done/total*100);
+  fill.style.width=p+'%';
+  pct.textContent=p+'%';
+
+  // Per-tier mini bars
+  const tierDone={};
+  progressCbs.forEach(c=>{
+    const t=c.dataset.tier||'0';
+    if(!tierDone[t])tierDone[t]={done:0,total:0};
+    tierDone[t].total++;
+    if(c.checked)tierDone[t].done++;
+  });
+  // Map tier indices to overview bars
+  const mapping={0:'ov0',1:'ov1',2:'ov2',3:'ov3',4:'ov4',5:'ov4'};
+  Object.keys(tierDone).forEach(t=>{
+    const id=mapping[t];
+    const el=document.getElementById(id);
+    if(el){const p2=Math.round(tierDone[t].done/tierDone[t].total*100);el.style.width=p2+'%';}
+  });
+
+  try{localStorage.setItem(KEY,JSON.stringify([...progressCbs].map(c=>c.checked)));}catch(e){}
+}
+
+// Restore saved progress
+try{
+  const saved=JSON.parse(localStorage.getItem(KEY)||'[]');
+  progressCbs.forEach((c,i)=>{if(saved[i])c.checked=true;});
+}catch(e){}
+progressCbs.forEach(c=>c.addEventListener('change',updateProgress));
+updateProgress();
+
+// Prevent card click when clicking checkbox label
+document.querySelectorAll('.mod-check').forEach(el=>{
+  el.addEventListener('click',e=>e.stopPropagation());
+});
+</script>
+</body>
+</html>

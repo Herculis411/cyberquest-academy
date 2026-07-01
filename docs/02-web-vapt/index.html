@@ -52,8 +52,8 @@ img,svg{display:block;max-width:100%;}
 /* ── SIDEBAR ────────────────────────────────────────────── */
 .sb-head{padding:24px 20px 18px;border-bottom:1px solid var(--border);}
 .sb-logo{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
-.sb-logo-mark{width:32px;height:32px;background:var(--green);border-radius:6px;display:flex;align-items:center;justify-content:center;}
-.sb-logo-mark svg{width:18px;height:18px;}
+.sb-logo-mark{width:44px;height:44px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.sb-logo-mark svg{width:44px;height:44px;}
 .sb-logo-text{font-family:var(--font-code);font-size:.78rem;font-weight:700;color:var(--green);letter-spacing:.06em;}
 .sb-logo-sub{font-size:.7rem;color:var(--muted);letter-spacing:.04em;}
 .sb-course-tag{display:inline-flex;align-items:center;gap:6px;background:var(--green-dim);border:1px solid var(--green);color:var(--green);font-family:var(--font-code);font-size:.68rem;letter-spacing:.08em;padding:4px 10px;border-radius:4px;}
@@ -248,7 +248,24 @@ img,svg{display:block;max-width:100%;}
   <div class="sb-head">
     <div class="sb-logo">
       <div class="sb-logo-mark">
-        <svg viewBox="0 0 18 18" fill="none"><path d="M2 9h5M11 9h5M9 2v5M9 11v5" stroke="#000" stroke-width="2.2" stroke-linecap="round"/><circle cx="9" cy="9" r="2.5" fill="#000"/></svg>
+        <svg viewBox="0 0 100 115" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <!-- Shield outer -->
+          <path d="M50,4 L96,28 L96,62 Q96,95 50,112 Q4,95 4,62 L4,28 Z" fill="#00D46A"/>
+          <!-- Shield inner dark -->
+          <path d="M50,14 L86,34 L86,62 Q86,88 50,103 Q14,88 14,62 L14,34 Z" fill="#0A0E1A"/>
+          <!-- Book spine -->
+          <rect x="46" y="38" width="8" height="50" rx="2" fill="#00D46A"/>
+          <!-- Left page -->
+          <path d="M46,40 Q20,34 12,42 L12,84 Q20,76 46,82 Z" fill="#0D4A32"/>
+          <!-- Right page -->
+          <path d="M54,40 Q80,34 88,42 L88,84 Q80,76 54,82 Z" fill="#0A3D28"/>
+          <!-- >_ terminal prompt on right page -->
+          <text x="71" y="68" font-family="'JetBrains Mono','Courier New',monospace" font-weight="700" font-size="17" fill="#00D46A" text-anchor="middle">&gt;_</text>
+          <!-- knowledge lines on left page -->
+          <line x1="18" y1="52" x2="42" y2="50" stroke="#00D46A" stroke-width="2.5" stroke-linecap="round" opacity="0.55"/>
+          <line x1="18" y1="62" x2="42" y2="60" stroke="#00D46A" stroke-width="2.5" stroke-linecap="round" opacity="0.38"/>
+          <line x1="18" y1="72" x2="34" y2="70" stroke="#00D46A" stroke-width="2.5" stroke-linecap="round" opacity="0.22"/>
+        </svg>
       </div>
       <div>
         <div class="sb-logo-text">CyberQuest</div>
@@ -1129,6 +1146,17 @@ img,svg{display:block;max-width:100%;}
 
 <!-- ══ FOOTER ══ -->
 <div class="course-footer">
+  <svg viewBox="0 0 100 115" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:40px;height:40px;margin:0 auto 14px;" aria-hidden="true">
+    <path d="M50,4 L96,28 L96,62 Q96,95 50,112 Q4,95 4,62 L4,28 Z" fill="#00D46A"/>
+    <path d="M50,14 L86,34 L86,62 Q86,88 50,103 Q14,88 14,62 L14,34 Z" fill="#0A0E1A"/>
+    <rect x="46" y="38" width="8" height="50" rx="2" fill="#00D46A"/>
+    <path d="M46,40 Q20,34 12,42 L12,84 Q20,76 46,82 Z" fill="#0D4A32"/>
+    <path d="M54,40 Q80,34 88,42 L88,84 Q80,76 54,82 Z" fill="#0A3D28"/>
+    <text x="71" y="68" font-family="'JetBrains Mono','Courier New',monospace" font-weight="700" font-size="17" fill="#00D46A" text-anchor="middle">&gt;_</text>
+    <line x1="18" y1="52" x2="42" y2="50" stroke="#00D46A" stroke-width="2.5" stroke-linecap="round" opacity="0.55"/>
+    <line x1="18" y1="62" x2="42" y2="60" stroke="#00D46A" stroke-width="2.5" stroke-linecap="round" opacity="0.38"/>
+    <line x1="18" y1="72" x2="34" y2="70" stroke="#00D46A" stroke-width="2.5" stroke-linecap="round" opacity="0.22"/>
+  </svg>
   <p>CyberQuest Academy — Course 02 · Web Application VAPT</p>
   <p class="mt-2">© 2026 <a href="https://stephenodunze.online" target="_blank">GeeksDane Consultancy Ltd</a> · <a href="https://herculis411.github.io/cyberquest-academy/" target="_blank">Back to Academy</a></p>
   <p class="mt-2" style="color:var(--dim);">All lab exercises target intentionally vulnerable applications in an isolated local environment. Never test systems you do not own or have explicit written permission to test.</p>
