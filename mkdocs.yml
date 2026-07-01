@@ -62,8 +62,9 @@ nav:
   - Home: index.md
   - "Start Here":
       - "00 · Ethics, Law & Authorisation": 00-ethics-law.md
-  - "Course 02 · Web Application VAPT":
+  - "Course 01 · Foundations":
       - "Penetration Testing Foundations": 01-foundations/index.html
+  - "Course 02 · Web Application VAPT":
       - "Hands-On VAPT Lab": 02-web-vapt/index.html
   - "Tier 0 · Foundations":
       - "01 · Building Your Safe Lab": 01-safe-lab.md
