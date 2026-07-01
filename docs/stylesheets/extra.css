@@ -1,12 +1,163 @@
-.geeksdane-credit {
-  margin-top: 0.4rem;
-  font-size: 0.7rem;
-  opacity: 0.8;
+/* =============================================================
+   CyberQuest Academy — Brand alignment CSS
+   Aligns MkDocs Material theme with Course 02 VAPT palette
+   Primary green : #00D46A
+   Dark surface  : #0A0E1A
+   Accent text   : #00D46A
+   ============================================================= */
+
+/* ── Override Material primary teal → CyberQuest green ── */
+:root {
+  --md-primary-fg-color:        #00D46A;
+  --md-primary-fg-color--light: #33DD85;
+  --md-primary-fg-color--dark:  #007A40;
+  --md-primary-bg-color:        #0A0E1A;
+  --md-accent-fg-color:         #00D46A;
+  --md-accent-fg-color--transparent: rgba(0, 212, 106, .1);
 }
-.geeksdane-credit a {
-  color: var(--md-primary-fg-color);
-  text-decoration: none;
+
+/* ── Header bar ── */
+.md-header {
+  background-color: #0A0E1A;
+  border-bottom: 2px solid #00D46A;
 }
-.geeksdane-credit a:hover {
-  text-decoration: underline;
+
+.md-header__title {
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+  font-weight: 700;
+  letter-spacing: -.01em;
+  color: #E2E8F0;
+}
+
+/* ── Navigation sidebar ── */
+.md-nav__title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .72rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: #00D46A;
+}
+
+.md-nav__link--active,
+.md-nav__link--active:hover {
+  color: #00D46A;
+  font-weight: 600;
+}
+
+.md-nav__link:hover {
+  color: #00D46A;
+}
+
+/* Active nav item left border */
+.md-nav__item--active > .md-nav__link {
+  color: #00D46A;
+  border-left: 2px solid #00D46A;
+  padding-left: 10px;
+}
+
+/* ── Footer ── */
+.md-footer {
+  background-color: #0A0E1A;
+}
+
+.md-footer-meta {
+  background-color: #060A14;
+}
+
+/* ── Links ── */
+.md-content a {
+  color: #00D46A;
+}
+
+.md-content a:hover {
+  color: #33DD85;
+}
+
+/* ── Code blocks — align with Course 02 terminal style ── */
+.highlight {
+  background: #020509 !important;
+  border: 1px solid #1E2A44;
+  border-radius: 8px;
+}
+
+code {
+  background: #0F1525;
+  border: 1px solid #1E2A44;
+  color: #E2E8F0;
+  border-radius: 4px;
+  padding: 2px 5px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .88em;
+}
+
+/* ── Admonitions — match Course 02 callout style ── */
+.admonition {
+  border-radius: 8px;
+  border-left-width: 3px;
+}
+
+.admonition.warning {
+  border-left-color: #F5A623;
+  background: rgba(245, 166, 35, .06);
+}
+
+.admonition.danger {
+  border-left-color: #FF4757;
+  background: rgba(255, 71, 87, .06);
+}
+
+.admonition.tip,
+.admonition.note {
+  border-left-color: #00D46A;
+  background: rgba(0, 212, 106, .06);
+}
+
+/* ── Tables ── */
+.md-typeset table:not([class]) th {
+  background-color: #0A0E1A;
+  color: #00D46A;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .82rem;
+  letter-spacing: .06em;
+}
+
+/* ── Search bar ── */
+.md-search__input {
+  background: #0F1525;
+  color: #E2E8F0;
+  border: 1px solid #1E2A44;
+}
+
+/* ── Buttons / CTA ── */
+.md-button {
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.md-button--primary {
+  background-color: #00D46A;
+  border-color: #00D46A;
+  color: #000;
+}
+
+.md-button--primary:hover {
+  background-color: #00B85C;
+  border-color: #00B85C;
+  color: #000;
+}
+
+/* ── Logo sizing in nav ── */
+.md-header__button.md-logo img,
+.md-header__button.md-logo svg {
+  height: 36px;
+  width: auto;
+}
+
+/* ── Monospace font for module numbers ── */
+.md-nav__link[href*="00"],
+.md-nav__link[href*="01"],
+.md-nav__link[href*="02"],
+.md-nav__link[href*="03"] {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .88rem;
 }

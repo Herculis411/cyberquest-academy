@@ -1,0 +1,40 @@
+<svg viewBox="0 0 400 480" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>CyberQuest Academy</title>
+  <desc>CyberQuest Academy official logo — shield with open book and terminal prompt, by GeeksDane Consultancy Ltd</desc>
+
+  <!-- Shield outer -->
+  <path d="M200,10 L385,90 L385,240 Q385,380 200,440 Q15,380 15,240 L15,90 Z" fill="#00D46A"/>
+
+  <!-- Shield inner dark surface -->
+  <path d="M200,34 L360,106 L360,240 Q360,358 200,412 Q40,358 40,240 L40,106 Z" fill="#0A0E1A"/>
+
+  <!-- Book spine -->
+  <rect x="184" y="138" width="32" height="180" rx="6" fill="#00D46A"/>
+
+  <!-- Left page -->
+  <path d="M184,144 Q88,128 52,156 L52,308 Q88,280 184,296 Z" fill="#0D4A32"/>
+
+  <!-- Right page -->
+  <path d="M216,144 Q312,128 348,156 L348,308 Q312,280 216,296 Z" fill="#0A3D28"/>
+
+  <!-- >_ terminal prompt on right page -->
+  <text x="282" y="242"
+        font-family="'JetBrains Mono','Courier New',monospace"
+        font-weight="700" font-size="62"
+        fill="#00D46A" text-anchor="middle">&gt;_</text>
+
+  <!-- Knowledge lines on left page -->
+  <line x1="68" y1="186" x2="172" y2="178" stroke="#00D46A" stroke-width="7" stroke-linecap="round" opacity="0.55"/>
+  <line x1="68" y1="214" x2="172" y2="206" stroke="#00D46A" stroke-width="7" stroke-linecap="round" opacity="0.38"/>
+  <line x1="68" y1="242" x2="134" y2="234" stroke="#00D46A" stroke-width="7" stroke-linecap="round" opacity="0.22"/>
+
+  <!-- Page curl hints -->
+  <path d="M52,308 Q60,326 82,322" fill="none" stroke="#00D46A" stroke-width="3" opacity="0.35"/>
+  <path d="M348,308 Q340,326 318,322" fill="none" stroke="#00D46A" stroke-width="3" opacity="0.28"/>
+
+  <!-- Wordmark -->
+  <text x="200" y="464"
+        font-family="'Space Grotesk','Inter',Arial,sans-serif"
+        font-weight="700" font-size="0"
+        fill="#0A0E1A" text-anchor="middle">CyberQuest Academy</text>
+</svg>

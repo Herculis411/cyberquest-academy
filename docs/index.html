@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CyberQuest Academy — Ethics-First Cybersecurity Training</title>
+<meta name="description" content="Free, beginner-to-advanced, ethics-first cybersecurity and penetration testing training. 22 modules, lab-only, Python-automated. By GeeksDane Consultancy.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0A0E1A;--surface:#0F1525;--card:#141B2D;--border:#1E2A44;
+  --green:#00D46A;--green-dim:#004D27;--amber:#F5A623;--red:#FF4757;
+  --blue:#3D8EF0;--ink:#E2E8F0;--muted:#64748B;--dim:#334155;
+  --radius:10px;--font-code:'JetBrains Mono',monospace;
+  --font-body:'Inter',sans-serif;--font-head:'Space Grotesk',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-body);line-height:1.65;-webkit-font-smoothing:antialiased;}
+a{color:var(--green);text-decoration:none;}
+a:hover{color:#33DD85;}
+:focus-visible{outline:2px solid var(--green);outline-offset:3px;border-radius:4px;}
+
+/* ── NAV ── */
+header{position:sticky;top:0;z-index:50;background:rgba(10,14,26,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);}
+nav{max-width:1100px;margin:0 auto;padding:14px 28px;display:flex;align-items:center;justify-content:space-between;gap:20px;}
+.nav-logo{display:flex;align-items:center;gap:10px;}
+.nav-logo svg{width:32px;height:32px;}
+.nav-logo-text{font-family:var(--font-code);font-size:.84rem;font-weight:700;color:var(--green);}
+.nav-links{display:flex;align-items:center;gap:28px;font-size:.9rem;font-weight:500;color:var(--muted);}
+.nav-links a:hover{color:var(--ink);}
+.nav-cta{background:var(--green);color:#000;padding:9px 18px;border-radius:8px;font-weight:700;font-size:.88rem;}
+.nav-cta:hover{background:#00B85C;color:#000;}
+@media(max-width:700px){.nav-links{display:none;}}
+
+/* ── HERO ── */
+.hero{max-width:1100px;margin:0 auto;padding:88px 28px 72px;text-align:center;}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--green-dim);border:1px solid rgba(0,212,106,.4);color:var(--green);font-family:var(--font-code);font-size:.72rem;letter-spacing:.1em;padding:6px 16px;border-radius:4px;margin-bottom:32px;}
+.hero-eyebrow .pulse{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 2s ease-in-out infinite;}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(0,212,106,.6);}50%{box-shadow:0 0 0 8px rgba(0,212,106,0);}}
+.hero h1{font-family:var(--font-head);font-size:clamp(2.6rem,5vw,4rem);font-weight:700;line-height:1.04;letter-spacing:-.02em;margin-bottom:24px;}
+.hero h1 .accent{color:var(--green);}
+.hero-sub{font-size:1.15rem;color:#94A3B8;max-width:58ch;margin:0 auto 36px;}
+.hero-ctas{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:52px;}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 24px;border-radius:8px;font-weight:700;font-size:.95rem;transition:transform .15s,box-shadow .15s;}
+.btn-green{background:var(--green);color:#000;}
+.btn-green:hover{transform:translateY(-2px);box-shadow:0 10px 24px -8px rgba(0,212,106,.55);color:#000;}
+.btn-outline{background:transparent;border:2px solid var(--border);color:var(--ink);}
+.btn-outline:hover{border-color:var(--green);color:var(--green);}
+.hero-stats{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;}
+.stat{font-family:var(--font-code);font-size:.76rem;color:var(--muted);background:var(--card);border:1px solid var(--border);padding:7px 14px;border-radius:6px;}
+
+/* ── TERMINAL ── */
+.terminal-wrap{max-width:860px;margin:56px auto 0;}
+.terminal{background:#020509;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;font-family:var(--font-code);}
+.term-bar{display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--surface);border-bottom:1px solid var(--border);}
+.td{width:11px;height:11px;border-radius:50%;}
+.term-title{font-size:.7rem;color:var(--muted);margin-left:auto;}
+.term-body{padding:20px 22px;font-size:.86rem;line-height:1.8;text-align:left;}
+.tp{color:var(--green);}
+.tc{color:#94A3B8;}
+.tg{color:var(--green);}
+.tb{color:var(--amber);}
+.tm{color:#C084FC;}
+.tr{color:var(--red);}
+.ti{color:var(--blue);}
+.tcom{color:var(--muted);font-style:italic;}
+
+/* ── DIVIDER ── */
+.divider{border:none;border-top:1px solid var(--border);margin:0;}
+
+/* ── WHY ── */
+.why{max-width:1100px;margin:0 auto;padding:80px 28px;}
+.why h2{font-family:var(--font-head);font-size:clamp(1.8rem,3vw,2.4rem);font-weight:700;text-align:center;margin-bottom:14px;}
+.why .sub{color:#94A3B8;text-align:center;margin-bottom:48px;font-size:1rem;}
+.why-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
+@media(max-width:700px){.why-grid{grid-template-columns:1fr;}}
+.why-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:26px 24px;}
+.why-card .ico{font-size:1.5rem;margin-bottom:12px;}
+.why-card h3{font-family:var(--font-head);font-size:1.05rem;font-weight:700;margin-bottom:8px;}
+.why-card p{color:#94A3B8;font-size:.9rem;}
+
+/* ── COURSES ── */
+.courses{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.courses-inner{max-width:1100px;margin:0 auto;padding:80px 28px;}
+.courses-inner h2{font-family:var(--font-head);font-size:clamp(1.8rem,3vw,2.4rem);font-weight:700;text-align:center;margin-bottom:14px;}
+.courses-inner .sub{color:#94A3B8;text-align:center;margin-bottom:48px;}
+.courses-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;}
+@media(max-width:800px){.courses-grid{grid-template-columns:1fr;}}
+.course-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:28px;display:flex;flex-direction:column;gap:14px;transition:border-color .2s,transform .15s;}
+.course-card:hover{border-color:var(--green);transform:translateY(-3px);}
+.course-num{font-family:var(--font-code);font-size:.72rem;font-weight:700;color:var(--green);background:var(--green-dim);border:1px solid rgba(0,212,106,.3);padding:3px 10px;border-radius:4px;width:fit-content;}
+.course-card h3{font-family:var(--font-head);font-size:1.25rem;font-weight:700;}
+.course-card p{color:#94A3B8;font-size:.9rem;flex:1;}
+.course-meta{display:flex;flex-wrap:wrap;gap:8px;}
+.meta-pill{font-family:var(--font-code);font-size:.68rem;background:var(--card);border:1px solid var(--border);color:var(--muted);padding:3px 9px;border-radius:4px;}
+.course-link{display:inline-flex;align-items:center;gap:6px;font-weight:700;font-size:.9rem;color:var(--green);margin-top:4px;}
+.course-link:hover{gap:10px;}
+
+/* ── LEARNING PATH ── */
+.path{max-width:1100px;margin:0 auto;padding:80px 28px;}
+.path h2{font-family:var(--font-head);font-size:clamp(1.8rem,3vw,2.4rem);font-weight:700;text-align:center;margin-bottom:14px;}
+.path .sub{color:#94A3B8;text-align:center;margin-bottom:48px;}
+.tiers{display:flex;flex-direction:column;gap:14px;}
+.tier-row{display:grid;grid-template-columns:180px 1fr;gap:20px;align-items:start;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px 22px;}
+.tier-label{font-family:var(--font-code);font-size:.78rem;font-weight:700;color:var(--green);border-right:1px solid var(--border);padding-right:18px;}
+.tier-label small{display:block;color:var(--muted);font-size:.65rem;font-weight:400;margin-top:4px;}
+.tier-modules{display:flex;flex-wrap:wrap;gap:8px;}
+.mod-chip{font-family:var(--font-code);font-size:.7rem;background:var(--surface);border:1px solid var(--border);color:#94A3B8;padding:4px 10px;border-radius:4px;}
+@media(max-width:700px){.tier-row{grid-template-columns:1fr;}.tier-label{border-right:none;border-bottom:1px solid var(--border);padding-right:0;padding-bottom:12px;}}
+
+/* ── ETHOS ── */
+.ethos{background:linear-gradient(135deg, var(--green-dim), #001A0D);border-top:1px solid rgba(0,212,106,.2);border-bottom:1px solid rgba(0,212,106,.2);}
+.ethos-inner{max-width:760px;margin:0 auto;padding:72px 28px;text-align:center;}
+.ethos-inner blockquote{font-family:var(--font-head);font-size:clamp(1.4rem,3vw,2rem);font-weight:700;color:var(--green);line-height:1.2;margin-bottom:20px;}
+.ethos-inner p{color:#94A3B8;font-size:.95rem;}
+
+/* ── FOOTER ── */
+footer{background:var(--surface);border-top:1px solid var(--border);padding:44px 28px 28px;}
+.foot-inner{max-width:1100px;margin:0 auto;}
+.foot-top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:32px;margin-bottom:36px;}
+.foot-brand .ft{font-family:var(--font-code);font-size:.82rem;font-weight:700;color:var(--green);margin-bottom:8px;}
+.foot-brand p{color:var(--muted);font-size:.85rem;max-width:30ch;}
+.foot-links h4{font-family:var(--font-code);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-bottom:12px;}
+.foot-links ul{list-style:none;display:flex;flex-direction:column;gap:8px;}
+.foot-links a{color:var(--muted);font-size:.88rem;}
+.foot-links a:hover{color:var(--ink);}
+.foot-bottom{border-top:1px solid var(--border);padding-top:20px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-family:var(--font-code);font-size:.72rem;color:var(--dim);}
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <a href="/" class="nav-logo">
+      <svg viewBox="0 0 100 115" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="CyberQuest Academy">
+        <path d="M50,4 L96,28 L96,62 Q96,95 50,112 Q4,95 4,62 L4,28 Z" fill="#00D46A"/>
+        <path d="M50,14 L86,34 L86,62 Q86,88 50,103 Q14,88 14,62 L14,34 Z" fill="#0A0E1A"/>
+        <rect x="46" y="38" width="8" height="50" rx="2" fill="#00D46A"/>
+        <path d="M46,40 Q20,34 12,42 L12,84 Q20,76 46,82 Z" fill="#0D4A32"/>
+        <path d="M54,40 Q80,34 88,42 L88,84 Q80,76 54,82 Z" fill="#0A3D28"/>
+        <text x="71" y="68" font-family="monospace" font-weight="700" font-size="17" fill="#00D46A" text-anchor="middle">&gt;_</text>
+        <line x1="18" y1="52" x2="42" y2="50" stroke="#00D46A" stroke-width="2.5" stroke-linecap="round" opacity="0.55"/>
+        <line x1="18" y1="62" x2="42" y2="60" stroke="#00D46A" stroke-width="2.5" stroke-linecap="round" opacity="0.38"/>
+        <line x1="18" y1="72" x2="34" y2="70" stroke="#00D46A" stroke-width="2.5" stroke-linecap="round" opacity="0.22"/>
+      </svg>
+      <span class="nav-logo-text">CyberQuest Academy</span>
+    </a>
+    <div class="nav-links">
+      <a href="/cyberquest-academy/00-ethics-law/">Ethics Gate</a>
+      <a href="/cyberquest-academy/01-foundations/">Course 01</a>
+      <a href="/cyberquest-academy/02-web-vapt/">Course 02</a>
+    </div>
+    <a class="nav-cta btn" href="/cyberquest-academy/00-ethics-law/">Start learning →</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow"><span class="pulse"></span>FREE · ETHICS-FIRST · LAB-ONLY</div>
+  <h1>Learn cybersecurity<br>the <span class="accent">right</span> way.</h1>
+  <p class="hero-sub">A complete, structured path from absolute beginner to a full authorised penetration testing engagement — 22 modules, isolated labs, Python-automated, ethics first.</p>
+  <div class="hero-ctas">
+    <a class="btn btn-green" href="/cyberquest-academy/00-ethics-law/">▶ Start with the Ethics Gate</a>
+    <a class="btn btn-outline" href="/cyberquest-academy/01-foundations/">View Course 01</a>
+  </div>
+  <div class="hero-stats">
+    <span class="stat">22 modules</span>
+    <span class="stat">2 courses</span>
+    <span class="stat">Lab-only · isolated Docker</span>
+    <span class="stat">Python-automated</span>
+    <span class="stat">Beginner → Professional</span>
+    <span class="stat">100% free</span>
+  </div>
+
+  <div class="terminal-wrap">
+    <div class="terminal">
+      <div class="term-bar">
+        <div class="td" style="background:#FF5F56"></div>
+        <div class="td" style="background:#FFBD2E"></div>
+        <div class="td" style="background:#27C93F"></div>
+        <span class="term-title">student@cyberquest-lab:~</span>
+      </div>
+      <div class="term-body">
+        <div><span class="tp">student@lab</span><span class="tc">:~$ </span><span class="tc">cat welcome.txt</span></div>
+        <div class="tg" style="margin-top:8px;">Welcome to CyberQuest Academy.</div>
+        <div class="tc">The techniques here can help people — or land you in a courtroom.</div>
+        <div class="tc">The only difference is <span class="tb">permission</span>.</div>
+        <div style="margin-top:12px;"><span class="tp">student@lab</span><span class="tc">:~$ </span><span class="tc">ls courses/</span></div>
+        <div style="margin-top:4px;"><span class="tg">00-ethics-law/</span><span class="tcom">    # Start here. Non-negotiable.</span></div>
+        <div><span class="tg">01-foundations/</span><span class="tcom">   # 22 modules · lab → professional</span></div>
+        <div><span class="tm">02-web-vapt/</span><span class="tcom">      # Hands-on OWASP Top 10 lab course</span></div>
+        <div style="margin-top:12px;"><span class="tp">student@lab</span><span class="tc">:~$ </span><span class="tc">cd 00-ethics-law && ./begin.sh</span></div>
+        <div class="tg">Ethics gate initialised. Read carefully.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- WHY -->
+<section class="why">
+  <h2>Why CyberQuest is different</h2>
+  <p class="sub">Most "learn hacking" resources hand you a port scanner on page one. We don't.</p>
+  <div class="why-grid">
+    <div class="why-card">
+      <div class="ico">⚖</div>
+      <h3>Ethics first, always</h3>
+      <p>Module 00 is a hard gate. Before any tool is touched, you learn the Computer Misuse Act 1990, authorisation, scope, and rules of engagement. No exceptions.</p>
+    </div>
+    <div class="why-card">
+      <div class="ico">🔬</div>
+      <h3>Lab-only, by design</h3>
+      <p>Every practical exercise runs against intentionally vulnerable Docker targets on your own machine — never against live, real, or third-party systems.</p>
+    </div>
+    <div class="why-card">
+      <div class="ico">🛡</div>
+      <h3>Offence paired with defence</h3>
+      <p>Every offensive technique is paired with the detection rule and defensive fix. You learn to catch the very activity you practise.</p>
+    </div>
+    <div class="why-card">
+      <div class="ico">📄</div>
+      <h3>A professional capstone</h3>
+      <p>You finish by running a complete authorised engagement and producing a professional report — the deliverable that turns knowledge into a career.</p>
+    </div>
+  </div>
+</section>
+
+<!-- COURSES -->
+<section class="courses">
+  <div class="courses-inner">
+    <h2>Two courses. One complete path.</h2>
+    <p class="sub">Start with Course 01 to build your technical foundations, then apply them in Course 02's hands-on OWASP lab.</p>
+    <div class="courses-grid">
+      <a class="course-card" href="/cyberquest-academy/01-foundations/">
+        <span class="course-num">COURSE 01</span>
+        <h3>Penetration Testing Foundations</h3>
+        <p>22 modules from ethics gate through safe lab setup, Linux, Python scripting, networking, offensive techniques, and a full capstone engagement. The complete foundations path.</p>
+        <div class="course-meta">
+          <span class="meta-pill">22 modules</span>
+          <span class="meta-pill">60–80 hours</span>
+          <span class="meta-pill">Python-automated</span>
+          <span class="meta-pill">Beginner → Pro</span>
+        </div>
+        <span class="course-link">Start Course 01 →</span>
+      </a>
+      <a class="course-card" href="/cyberquest-academy/02-web-vapt/">
+        <span class="course-num" style="background:rgba(139,92,246,.12);color:#C084FC;border-color:rgba(139,92,246,.3);">COURSE 02</span>
+        <h3>Web Application VAPT</h3>
+        <p>A hands-on OWASP Top 10 lab course — exploit every vulnerability category against OWASP Juice Shop and DVWA, always paired with the defensive remediation and a professional report.</p>
+        <div class="course-meta">
+          <span class="meta-pill">10 labs</span>
+          <span class="meta-pill">8–12 hours</span>
+          <span class="meta-pill">Burp Suite · sqlmap</span>
+          <span class="meta-pill">Intermediate</span>
+        </div>
+        <span class="course-link" style="color:#C084FC;">Start Course 02 →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- LEARNING PATH -->
+<section class="path">
+  <h2>The full learning path</h2>
+  <p class="sub">22 modules across five tiers, gated by a mandatory ethics module.</p>
+  <div class="tiers">
+    <div class="tier-row" style="border-color:rgba(245,166,35,.3);">
+      <div class="tier-label" style="color:var(--amber);">Ethics Gate<small>Module 00</small></div>
+      <div class="tier-modules">
+        <span class="mod-chip" style="border-color:rgba(245,166,35,.3);color:var(--amber);">00 · Ethics, Law & Authorisation</span>
+      </div>
+    </div>
+    <div class="tier-row">
+      <div class="tier-label">Tier 0<small>Foundations</small></div>
+      <div class="tier-modules">
+        <span class="mod-chip">01 · Safe Lab</span>
+        <span class="mod-chip">02 · Linux & CLI</span>
+        <span class="mod-chip">03 · Git & GitHub</span>
+        <span class="mod-chip">04 · Python I</span>
+        <span class="mod-chip">05 · Python II</span>
+        <span class="mod-chip">06 · Python Files</span>
+      </div>
+    </div>
+    <div class="tier-row">
+      <div class="tier-label">Tier 1<small>Networking</small></div>
+      <div class="tier-modules">
+        <span class="mod-chip">07 · Networking</span>
+        <span class="mod-chip">08 · Python Net</span>
+        <span class="mod-chip">09 · Recon & OSINT</span>
+        <span class="mod-chip">10 · Scanning</span>
+        <span class="mod-chip">11 · Scapy</span>
+      </div>
+    </div>
+    <div class="tier-row" style="border-color:rgba(192,132,252,.2);">
+      <div class="tier-label" style="color:#C084FC;">Tier 2<small>Offensive</small></div>
+      <div class="tier-modules">
+        <span class="mod-chip">12 · Cryptography</span>
+        <span class="mod-chip">13 · Web App I</span>
+        <span class="mod-chip">14 · Web App II</span>
+        <span class="mod-chip">15 · Auth & Passwords</span>
+        <span class="mod-chip">16 · Exploitation</span>
+      </div>
+    </div>
+    <div class="tier-row" style="border-color:rgba(255,71,87,.2);">
+      <div class="tier-label" style="color:var(--red);">Tier 3<small>Advanced</small></div>
+      <div class="tier-modules">
+        <span class="mod-chip">17 · Post-Exploitation</span>
+        <span class="mod-chip" style="border-style:dashed;">18 · Wireless ⬚</span>
+        <span class="mod-chip" style="border-style:dashed;">19 · Malware Analysis ⬚</span>
+        <span class="mod-chip">20 · Blue-Team</span>
+      </div>
+    </div>
+    <div class="tier-row" style="border-color:rgba(0,212,106,.25);">
+      <div class="tier-label" style="color:var(--green);">Tier 4<small>Capstone</small></div>
+      <div class="tier-modules">
+        <span class="mod-chip" style="border-color:rgba(0,212,106,.25);">21 · Reporting</span>
+        <span class="mod-chip" style="border-color:rgba(0,212,106,.25);">22 · Capstone</span>
+        <span class="mod-chip" style="border-color:rgba(0,212,106,.25);">22b · Full Lab Procedure</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ETHOS -->
+<section class="ethos">
+  <div class="ethos-inner">
+    <blockquote>"Same skills, different ethics."</blockquote>
+    <p>The ethics, the evidence, and the report are what make you a professional instead of a statistic. Every technique in this academy is taught so you can <strong style="color:var(--ink);">defend</strong> systems and test <strong style="color:var(--ink);">with permission</strong>.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-inner">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <div class="ft">CyberQuest Academy</div>
+        <p>Free, ethics-first cybersecurity training by GeeksDane Consultancy Ltd.</p>
+      </div>
+      <div class="foot-links">
+        <h4>Courses</h4>
+        <ul>
+          <li><a href="/cyberquest-academy/00-ethics-law/">00 · Ethics Gate</a></li>
+          <li><a href="/cyberquest-academy/01-foundations/">Course 01 · Foundations</a></li>
+          <li><a href="/cyberquest-academy/02-web-vapt/">Course 02 · Web VAPT</a></li>
+        </ul>
+      </div>
+      <div class="foot-links">
+        <h4>Author</h4>
+        <ul>
+          <li><a href="https://stephenodunze.online" target="_blank">Stephen Odunze</a></li>
+          <li><a href="https://github.com/Herculis411" target="_blank">GitHub</a></li>
+          <li><a href="https://linkedin.com/in/stephen-odunze411" target="_blank">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 GeeksDane Consultancy Ltd</span>
+      <span>Educational use · Ethics first · Lab only</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

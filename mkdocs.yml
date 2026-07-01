@@ -59,7 +59,7 @@ plugins:
   - search
 
 nav:
-  - Home: index.md
+  - Home: index.html
   - "Start Here":
       - "00 · Ethics, Law & Authorisation": 00-ethics-law.md
   - "Course 01 · Foundations":
